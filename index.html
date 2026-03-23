@@ -137,18 +137,8 @@
 </div>
 
 <script>
-    let targetDate;
-
-    // Check if already stored
-    if (localStorage.getItem("launchDate")) {
-        targetDate = new Date(localStorage.getItem("launchDate"));
-    } else {
-        // Set once (2 months from first visit)
-        targetDate = new Date();
-        targetDate.setMonth(targetDate.getMonth() + 2);
-
-        localStorage.setItem("launchDate", targetDate);
-    }
+    // SET YOUR LAUNCH DATE HERE (same for all users)
+    const targetDate = new Date("2026-06-01T00:00:00").getTime();
 
     function updateCountdown() {
         const now = new Date().getTime();
@@ -170,6 +160,7 @@
         document.getElementById("seconds").innerText = seconds;
     }
 
+    updateCountdown(); // run immediately
     setInterval(updateCountdown, 1000);
 </script>
 </body>
