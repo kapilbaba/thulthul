@@ -137,12 +137,27 @@
 </div>
 
 <script>
-    const targetDate = new Date();
-    targetDate.setMonth(targetDate.getMonth() + 2);
+    let targetDate;
+
+    // Check if already stored
+    if (localStorage.getItem("launchDate")) {
+        targetDate = new Date(localStorage.getItem("launchDate"));
+    } else {
+        // Set once (2 months from first visit)
+        targetDate = new Date();
+        targetDate.setMonth(targetDate.getMonth() + 2);
+
+        localStorage.setItem("launchDate", targetDate);
+    }
 
     function updateCountdown() {
         const now = new Date().getTime();
         const distance = targetDate - now;
+
+        if (distance <= 0) {
+            document.querySelector(".countdown").innerHTML = "WE ARE LIVE 🚀";
+            return;
+        }
 
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
@@ -153,14 +168,9 @@
         document.getElementById("hours").innerText = hours;
         document.getElementById("minutes").innerText = minutes;
         document.getElementById("seconds").innerText = seconds;
-
-        if (distance < 0) {
-            document.querySelector(".countdown").innerHTML = "WE ARE LIVE 🚀";
-        }
     }
 
     setInterval(updateCountdown, 1000);
 </script>
-
 </body>
 </html>
